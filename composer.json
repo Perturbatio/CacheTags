@@ -1,0 +1,23 @@
+{
+    "name": "perturbatio/cachetags",
+    "autoload": {
+        "psr-4": {
+            "Perturbatio\\CacheTags\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "phpspec/phpspec": "~2.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Perturbatio\\CacheTags\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "Illuminate/Support": "^5.3"
+    }
+}
