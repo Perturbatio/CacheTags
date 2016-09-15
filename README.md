@@ -1,5 +1,7 @@
 # CacheTags - Laravel blade partial caching
 
+https://api.travis-ci.org/Perturbatio/CacheTags.svg?branch=master
+
 This package is intended to allow you to cache portions of a web page by marking them using blade directives.
 
 You can specify how long the partial will be cached for as well as naming it (to allow you to invalidate it if needed).
