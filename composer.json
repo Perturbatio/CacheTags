@@ -10,7 +10,9 @@
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",
-        "phpspec/phpspec": "~2.0"
+        "orchestra/testbench": "^3.3",
+        "Illuminate/Container": "^5.3",
+        "Illuminate/Filesystem": "^5.3"
     },
     "autoload-dev": {
         "psr-4": {
@@ -18,6 +20,7 @@
         }
     },
     "require": {
-        "Illuminate/Support": "^5.3"
+        "Illuminate/Support": "^5.3",
+        "Illuminate/Cache" : "^5.3"
     }
 }

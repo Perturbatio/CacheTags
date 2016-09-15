@@ -8,7 +8,8 @@ You can specify how long the partial will be cached for as well as naming it (to
 Install it as a composer package (not on packagist for now)
 
 Add `Perturbatio\CacheTags\CacheTagsProvider::class` to your config/app.php providers array
-Add `"CacheTags" => Perturbatio\CacheTags\CacheTags::class to your aliases
+
+Add `'CacheTags' => Perturbatio\CacheTags\CacheTags::class` to your aliases
 
 usage:
 ```Blade

@@ -14,7 +14,6 @@ class CacheTagsProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		CacheTags::addCacheMacros();
 		CacheTags::registerBladeDirectives();
 	}
 
@@ -29,7 +28,7 @@ class CacheTagsProvider extends ServiceProvider
 		$this->mergeConfigFrom($configPath, 'debugbar');
 		//
 		$this->app->singleton(CacheTags::class, function ($app) {
-			return new CacheTags();
+			return new CacheTags(cache());
 		});
 	}
 }

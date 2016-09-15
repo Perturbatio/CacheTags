@@ -8,13 +8,36 @@
 namespace Perturbatio\CacheTags;
 
 
+use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
 
 class CacheTags {
+
 	protected static $cacheContexts = [];
+	/**
+	 * @var Cache
+	 */
+	protected $cache;
+
+	/**
+	 * CacheTags constructor.
+	 */
+	public function __construct(CacheManager $cache) {
+		$this->cache = $cache;
+		$this->addCacheMacros();
+	}
+
+	/**
+	 * Get a copy of the internal $cacheContexts array
+	 *
+	 * @return array
+	 */
+	public static function getCacheContexts() {
+		return self::$cacheContexts;
+	}
 
 	/**
 	 * @param        $key
@@ -45,7 +68,7 @@ class CacheTags {
 	 * @return mixed
 	 */
 	public function has( $key ) {
-		return Cache::has( $key );
+		return $this->cache->has( $key );
 	}
 
 	/**
@@ -64,10 +87,10 @@ class CacheTags {
 			static::$cacheContexts[ $key ] = false;
 
 			$result = ob_get_clean();
-			if ( Cache::supportsTags() ){
-				Cache::tags( $lastCacheItem[ 'tag' ] )->put( $key, $result, $lastCacheItem[ 'minutes' ] );
+			if ( $this->cache->supportsTags() ){
+				$this->cache->tags( $lastCacheItem[ 'tag' ] )->put( $key, $result, $lastCacheItem[ 'minutes' ] );
 			} else {
-				Cache::put( $key, $result, $lastCacheItem[ 'minutes' ] );
+				$this->cache->put( $key, $result, $lastCacheItem[ 'minutes' ] );
 			}
 
 
@@ -80,9 +103,8 @@ class CacheTags {
 	/**
 	 *
 	 */
-	static public function addCacheMacros() {
-
-		Cache::macro( 'supportsTags', function () {
+	public function addCacheMacros() {
+		$this->cache->macro( 'supportsTags', function () {
 			return method_exists( app( 'cache' ), 'tags' );
 		} );
 	}
@@ -121,23 +143,41 @@ class CacheTags {
 		} );
 	}
 
-
+	/**
+	 *
+	 *
+	 * @param        $key
+	 * @param string $tag
+	 *
+	 * @return mixed
+	 */
 	public function get( $key, $tag = '' ) {
-		if ( Cache::supportsTags() ){
+		if ( $this->cache->supportsTags() ){
 			$tag     = $tag | config( 'cachetags.default_tag', static::class );
-			$content = Cache::tags( $tag )->get( $key );
+			$content = $this->cache->tags( $tag )->get( $key );
 		} else {
-			$content = Cache::get( $key );
+			$content = $this->cache->get( $key );
 		}
 		return $content;
 	}
 
+	/**
+	 * @param        $key
+	 * @param string $tag
+	 */
 	public function clear( $key, $tag = ''  ) {
-		if ( Cache::supportsTags() ){
+		if ( $this->cache->supportsTags() ){
 			$tag     = $tag | config( 'cachetags.default_tag', static::class );
-			Cache::tags( $tag )->flush( $key );
+			$this->cache->tags( $tag )->flush( $key );
 		} else {
-			Cache::forget( $key );
+			$this->cache->forget( $key );
 		}
+	}
+
+	/**
+	 * @return Cache
+	 */
+	public function getCache() {
+		return $this->cache;
 	}
 }
