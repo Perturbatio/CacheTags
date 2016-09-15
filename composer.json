@@ -22,5 +22,8 @@
     "require": {
         "Illuminate/Support": "^5.3",
         "Illuminate/Cache" : "^5.3"
+    },
+    "scripts": {
+        "test": "phpunit tests"
     }
 }
