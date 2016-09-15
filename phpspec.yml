@@ -1,4 +1,0 @@
-suites:
-  library_suite:
-    namespace: Perturbatio\CacheTags\Tests
-    psr4_prefix: Perturbatio\CacheTags\Tests
