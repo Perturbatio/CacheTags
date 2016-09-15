@@ -17,6 +17,17 @@ usage:
 @cachetagEnd()
 ```
 
+usage outside of blade:
+```PHP
+if ( cachetagHas('menu') ){
+  echo cachetagGet('menu');
+} else {
+  cachetagStart('menu', 15);
+  echo superCoolMenuThatTakesTooLongToGenerate();
+  echo cachetagEnd();
+}
+```
+
 ## Status
 There is work to be done on this for now, however the main caching mechanism is now functional
 
