@@ -24,7 +24,7 @@ if ( !function_exists( 'cachetagStart' ) ){
 	}
 }
 
-if ( !function_exists( 'cachetagStop' ) ){
+if ( !function_exists( 'cachetagEnd' ) ){
 	/**
 	 * @return mixed
 	 */
