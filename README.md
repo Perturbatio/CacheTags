@@ -29,6 +29,4 @@ if ( cachetagHas('menu') ){
 }
 ```
 
-## Status
-There is work to be done on this for now, however the main caching mechanism is now functional
 
