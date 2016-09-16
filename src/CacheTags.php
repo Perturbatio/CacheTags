@@ -18,14 +18,14 @@ class CacheTags {
 
 	protected static $cacheContexts = [];
 	/**
-	 * @var Cache
+	 * @var CacheManager
 	 */
 	protected $cache;
 
 	/**
 	 * CacheTags constructor.
 	 */
-	public function __construct(CacheManager $cache) {
+	public function __construct( CacheManager $cache ) {
 		$this->cache = $cache;
 		$this->addCacheMacros();
 	}
@@ -40,13 +40,15 @@ class CacheTags {
 	}
 
 	/**
+	 * Start caching the output that follows this call
+	 *
 	 * @param        $key
 	 * @param null   $minutes
 	 * @param string $tags
 	 */
-	public function start( $key, $minutes = null, $tag = '' ) {
+	public function start( $key, $minutes = null, $tags = '' ) {
 		$minutes = $minutes | config( 'cachetags.timeout', 1 );
-		$tag     = $tag | config( 'cachetags.default_tag', static::class );
+		$tags    = static::splitTags($tags | config( 'cachetags.default_tag', static::class ));
 
 		if ( $minutes === null ){
 			$minutes = 15;
@@ -57,12 +59,14 @@ class CacheTags {
 		if ( isset( static::$cacheContexts[ $key ] ) ){
 			throw new InvalidArgumentException( "Cache key '{$key}' is already in use" );
 		}
-		static::$cacheContexts[ $key ] = compact( 'key', 'minutes', 'tag' );
+		static::$cacheContexts[ $key ] = compact( 'key', 'minutes', 'tags' );
 
 		ob_start();
 	}
 
 	/**
+	 * Determine if the cache has the specified key
+	 *
 	 * @param $key
 	 *
 	 * @return mixed
@@ -72,6 +76,8 @@ class CacheTags {
 	}
 
 	/**
+	 * Close the output buffer and store the result in the latest cache key
+	 *
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -144,38 +150,57 @@ class CacheTags {
 	}
 
 	/**
-	 *
+	 * Retrieve a cached item
 	 *
 	 * @param        $key
-	 * @param string $tag
+	 * @param string $tags
 	 *
 	 * @return mixed
 	 */
-	public function get( $key, $tag = '' ) {
+	public function get( $key, $tags = '' ) {
 		if ( $this->cache->supportsTags() ){
-			$tag     = $tag | config( 'cachetags.default_tag', static::class );
-			$content = $this->cache->tags( $tag )->get( $key );
+			$tags    = static::splitTags( $tags | config( 'cachetags.default_tag', static::class ) );
+			$content = $this->cache->tags( $tags )->get( $key );
 		} else {
 			$content = $this->cache->get( $key );
 		}
+
 		return $content;
 	}
 
 	/**
+	 * Clear a cached item
+	 *
 	 * @param        $key
-	 * @param string $tag
+	 * @param string $tags
 	 */
-	public function clear( $key, $tag = ''  ) {
+	public function clear( $key, $tags = '' ) {
 		if ( $this->cache->supportsTags() ){
-			$tag     = $tag | config( 'cachetags.default_tag', static::class );
-			$this->cache->tags( $tag )->flush( $key );
+			$tags = static::splitTags( $tags | config( 'cachetags.default_tag', static::class ) );
+			$this->cache->tags( $tags )->flush( $key );
 		} else {
 			$this->cache->forget( $key );
 		}
 	}
 
 	/**
-	 * @return Cache
+	 * get a tag array from the supplied string
+	 *
+	 * @param $tags
+	 *
+	 * @return array
+	 */
+	static public function splitTags( $tags ) {
+		$result = $tags;
+		if ( !is_array( $tags ) ){
+			$result = explode( ',', (string)$tags );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return CacheManager
 	 */
 	public function getCache() {
 		return $this->cache;

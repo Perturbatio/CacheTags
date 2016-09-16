@@ -57,12 +57,12 @@ if ( !function_exists( 'cachetagClear' ) ){
 	 *
 	 * @return mixed
 	 */
-	function cachetagClear($key) {
+	function cachetagClear($key, $tag = '') {
 		/**
 		 * @var $cacheTags CacheTags
 		 */
 		$cacheTags = app('CacheTags');
-		return $cacheTags->clear($key);
+		return $cacheTags->clear($key, $tag);
 	}
 }
 

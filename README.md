@@ -1,6 +1,6 @@
 # CacheTags - Laravel blade partial caching
 
-![TravisCI Build Status](https://api.travis-ci.org/Perturbatio/CacheTags.svg?branch=master)
+[![Build Status](https://travis-ci.org/Perturbatio/CacheTags.svg?branch=master)](https://travis-ci.org/Perturbatio/CacheTags)
 
 This package is intended to allow you to cache portions of a web page by marking them using blade directives.
 
@@ -32,3 +32,7 @@ if ( cachetagHas('menu') ){
 ```
 
 
+```PHP
+//clear the cache for a specific key
+cachetagClear('menu');
+````
