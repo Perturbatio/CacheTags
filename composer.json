@@ -1,5 +1,19 @@
 {
     "name": "perturbatio/cachetags",
+    "description": "Provides a partial caching mechanism for use with Laravel's Blade templating language or in normal PHP with the helpers",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "blade",
+        "cache",
+        "partials"
+    ],
+    "authors": [
+        {
+            "name": "Kris Kelly",
+            "email": "bertpotato@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Perturbatio\\CacheTags\\": "src/"
@@ -21,9 +35,12 @@
     },
     "require": {
         "Illuminate/Support": "^5.3",
-        "Illuminate/Cache" : "^5.3"
+        "Illuminate/Cache": "^5.3"
     },
     "scripts": {
         "test": "phpunit tests"
+    },
+    "branch-alias": {
+        "dev-master": "1.0-dev"
     }
 }
