@@ -22,6 +22,8 @@ Add `Perturbatio\CacheTags\CacheTagsProvider::class` to your config/app.php prov
 
 Add `'CacheTags' => Perturbatio\CacheTags\CacheTags::class` to your aliases
 
+Then publish the config file with `php artisan vendor:publish --tag=config` this will create a `cachetag.php` config file in `/config`
+
 ## Usage
 
 ### Caching items
@@ -29,19 +31,19 @@ Add `'CacheTags' => Perturbatio\CacheTags\CacheTags::class` to your aliases
 #### Blade
 
 ```Blade
-@cachetagStart('menu', 15) <!-- menu cached for 15 minutes -->
-<?=superCoolMenuThatTakesTooLongToGenerate();?>
+@cachetagStart('super-cool-widget', 15) <!-- menu cached for 15 minutes -->
+<?=superCoolWidgetThatTakesTooLongToGenerate();?>
 @cachetagEnd()
 ```
 
 #### PHP
 
 ```PHP
-if ( cachetagHas('menu') ){
-  echo cachetagGet('menu');
+if ( cachetagHas('super-cool-widget') ){
+  echo cachetagGet('super-cool-widget');
 } else {
-  cachetagStart('menu', 15);
-  echo superCoolMenuThatTakesTooLongToGenerate();
+  cachetagStart('super-cool-widget', 15);
+  echo superCoolWidgetThatTakesTooLongToGenerate();
   echo cachetagEnd();
 }
 ```
@@ -51,12 +53,12 @@ if ( cachetagHas('menu') ){
 #### Blade
 
 ```Blade
-@cachetagClear('menu')
+@cachetagClear('super-cool-widget')
 ```
 
 #### PHP
 
 ```PHP
 //clear the cache for a specific key
-cachetagClear('menu');
+cachetagClear('super-cool-widget');
 ````

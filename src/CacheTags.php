@@ -110,9 +110,16 @@ class CacheTags {
      *
      */
     public function addCacheMacros() {
-        $this->cache->macro('supportsTags', function () {
+
+        $macro = function () {
             return method_exists(app('cache'), 'tags');
-        });
+        };
+
+        $this->cache->macro('supportsTags', $macro);
+
+        if (class_exists('Cache')){
+            Cache::macro('supportsTags', $macro);
+        }
     }
 
     /**
@@ -126,7 +133,7 @@ class CacheTags {
                 throw new InvalidArgumentException(("cachetagStart requires the cache key as a parameter"));
             }
             $key     = $params[0];
-            $minutes = isset($params[1]) ? $params[1] : null;
+            $minutes = isset($params[1]) ? $params[1] : config('cachetags.timeout', 15);
             $tag     = isset($params[2]) ? $params[2] : 'cachetags';
 
             return "<?php 
