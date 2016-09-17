@@ -7,7 +7,12 @@ This package is intended to allow you to cache portions of a web page by marking
 You can specify how long the partial will be cached for as well as naming it (to allow you to invalidate it if needed).
 
 ## Installation
-Install it as a composer package (not on packagist for now)
+
+Install it as a composer package with
+
+```
+composer require perturbatio/cachetags
+```
 
 Add `Perturbatio\CacheTags\CacheTagsProvider::class` to your config/app.php providers array
 
