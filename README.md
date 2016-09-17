@@ -1,6 +1,10 @@
 # CacheTags - Laravel blade partial caching
 
 [![Build Status](https://travis-ci.org/Perturbatio/CacheTags.svg?branch=master)](https://travis-ci.org/Perturbatio/CacheTags)
+[![Latest Stable Version](https://poser.pugx.org/perturbatio/cachetags/v/stable?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
+[![Latest Unstable Version](https://poser.pugx.org/perturbatio/cachetags/v/unstable?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
+[![License](https://poser.pugx.org/perturbatio/cachetags/license?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
+[![Total Downloads](https://poser.pugx.org/perturbatio/cachetags/downloads?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
 
 This package is intended to allow you to cache portions of a web page by marking them using blade directives.
 
