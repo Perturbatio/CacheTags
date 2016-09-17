@@ -13,14 +13,20 @@ Add `Perturbatio\CacheTags\CacheTagsProvider::class` to your config/app.php prov
 
 Add `'CacheTags' => Perturbatio\CacheTags\CacheTags::class` to your aliases
 
-usage:
+## Usage
+
+### Caching items
+
+#### Blade
+
 ```Blade
 @cachetagStart('menu', 15) <!-- menu cached for 15 minutes -->
 <?=superCoolMenuThatTakesTooLongToGenerate();?>
 @cachetagEnd()
 ```
 
-usage outside of blade:
+#### PHP
+
 ```PHP
 if ( cachetagHas('menu') ){
   echo cachetagGet('menu');
@@ -31,6 +37,15 @@ if ( cachetagHas('menu') ){
 }
 ```
 
+### Clearing items
+
+#### Blade
+
+```Blade
+@cachetagClear('menu')
+```
+
+#### PHP
 
 ```PHP
 //clear the cache for a specific key
