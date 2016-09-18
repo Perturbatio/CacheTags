@@ -12,7 +12,7 @@ You can specify how long the partial will be cached for as well as naming it (to
 
 ## Installation
 
-Install it as a composer package with
+Install it as a composer package with:
 
 ```
 composer require perturbatio/cachetags
@@ -31,7 +31,7 @@ Then publish the config file with `php artisan vendor:publish --tag=config` this
 #### Blade
 
 ```Blade
-@cachetagStart('super-cool-widget', 15) <!-- menu cached for 15 minutes -->
+@cachetagStart('super-cool-widget', 15) <!-- widget cached for 15 minutes -->
 <?=superCoolWidgetThatTakesTooLongToGenerate();?>
 @cachetagEnd()
 ```
