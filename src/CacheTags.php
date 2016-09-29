@@ -43,15 +43,15 @@ class CacheTags {
      * Start caching the output that follows this call
      *
      * @param        $key
-     * @param null   $minutes
+     * @param null   $time
      * @param string $tags
      */
-    public function start( $key, $minutes = null, $tags = '' ) {
-        $minutes = $minutes | config('cachetags.timeout', 1);
-        $tags    = static::splitTags($tags | config('cachetags.default_tag', static::class));
+    public function start( $key, $time = null, $tags = '' ) {
+        $time = $time | config('cachetags.timeout', 1);
+        $tags = static::splitTags($tags | config('cachetags.default_tag', static::class));
 
-        if ($minutes === null) {
-            $minutes = 15;
+        if ($time === null) {
+            $time = 15;
         }
         if (empty($key)) {
             throw new InvalidArgumentException("Cache key cannot be empty");
@@ -59,7 +59,7 @@ class CacheTags {
         if (isset(static::$cacheContexts[ $key ])) {
             throw new InvalidArgumentException("Cache key '{$key}' is already in use");
         }
-        static::$cacheContexts[ $key ] = compact('key', 'minutes', 'tags');
+        static::$cacheContexts[ $key ] = compact('key', 'time', 'tags');
 
         ob_start();
     }
@@ -93,12 +93,18 @@ class CacheTags {
             static::$cacheContexts[ $key ] = false;
 
             $result = ob_get_clean();
+
             if ($this->cache->supportsTags()) {
-                $this->cache->tags($lastCacheItem['tag'])->put($key, $result, $lastCacheItem['minutes']);
+                $cache = $this->cache->tags($lastCacheItem['tag']);
             } else {
-                $this->cache->put($key, $result, $lastCacheItem['minutes']);
+                $cache = $this->cache;
             }
 
+            if ($lastCacheItem['time'] !== 'forever') {
+                $cache->put($key, $result, $lastCacheItem['time']);
+            } else {
+                $cache->forever($key, $result);
+            }
 
             return $result;
         } else {
@@ -117,7 +123,7 @@ class CacheTags {
 
         $this->cache->macro('supportsTags', $macro);
 
-        if (class_exists('Cache')){
+        if (class_exists('Cache')) {
             Cache::macro('supportsTags', $macro);
         }
     }
@@ -133,14 +139,14 @@ class CacheTags {
                 throw new InvalidArgumentException(("cachetagStart requires the cache key as a parameter"));
             }
             $key     = $params[0];
-            $minutes = isset($params[1]) ? $params[1] : config('cachetags.timeout', 15);
+            $time = isset($params[1]) ? $params[1] : config('cachetags.timeout', 15);
             $tag     = isset($params[2]) ? $params[2] : 'cachetags';
 
             return "<?php 
 			if ( cachetagHas(\"{$key}\") ){
 				echo cachetagGet(\"{$key}\");
 			} else {
-				cachetagStart(\"{$key}\", $minutes, \"{$tag}\");
+				cachetagStart(\"{$key}\", $time, \"{$tag}\");
 			?>";
         });
 

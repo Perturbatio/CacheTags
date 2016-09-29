@@ -53,4 +53,15 @@ class CacheTagsTest extends \Orchestra\Testbench\TestCase {
         $this->cacheTags->clear($cacheKey);
         $this->assertNotEquals($testValue, $this->cacheTags->get($cacheKey), " data was not cleared from cache");
     }
+
+    public function testIfWeCanCacheForever(){
+        $cacheKey = __METHOD__;
+
+        $this->cacheTags->start($cacheKey, 'forever');
+        echo 'forever young';
+        $this->cacheTags->end();
+
+        $this->assertStringStartsWith('forever young', $this->cacheTags->get($cacheKey), "Cache forever failed, can't find test string");
+    }
+
 }
