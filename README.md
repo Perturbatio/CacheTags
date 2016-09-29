@@ -48,14 +48,20 @@ Then publish the config file with `php artisan vendor:publish --tag=config` this
 
 ```PHP
 if ( cachetagHas('super-cool-widget') ){
-  echo cachetagGet('super-cool-widget');
+	echo cachetagGet('super-cool-widget');
 } else {
-  cachetagStart('super-cool-widget', 15);
-  echo superCoolWidgetThatTakesTooLongToGenerate();
-	  cachetagStart('other-cool-widget', 15); <!-- widget cached until something clears it, nested inside the outer cache -->
-	  echo otherCoolWidgetThatTakesTooLongToGenerate();
-	  echo cachetagEnd();
-  echo cachetagEnd();
+	cachetagStart('super-cool-widget', 15);
+	echo superCoolWidgetThatTakesTooLongToGenerate();
+  
+		if ( cachetagHas('other-cool-widget') ){
+			echo cachetagGet('other-cool-widget');
+		} else {
+			cachetagStart('other-cool-widget', 'forever'); //widget cached until something clears it, nested inside the outer cache 
+			echo otherCoolWidgetThatTakesTooLongToGenerate();
+			echo cachetagEnd();
+		}
+		
+	echo cachetagEnd();
 }
 ```
 
