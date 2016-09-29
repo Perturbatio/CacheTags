@@ -10,6 +10,8 @@ This package is intended to allow you to cache portions of a web page by marking
 
 You can specify how long the partial will be cached for as well as naming it (to allow you to invalidate it if needed).
 
+Nesting cacheTags is also possible, meaning that inner content will be cached at least as long as the outer cache is
+
 ## Installation
 
 Install it as a composer package with:
@@ -33,18 +35,33 @@ Then publish the config file with `php artisan vendor:publish --tag=config` this
 ```Blade
 @cachetagStart('super-cool-widget', 15) <!-- widget cached for 15 minutes -->
 <?=superCoolWidgetThatTakesTooLongToGenerate();?>
+
+	@cachetagStart('other-cool-widget', 'forever') <!-- widget cached until something clears it, nested inside the outer cache -->
+	<?=otherCoolWidgetThatTakesTooLongToGenerate();?>
+	@cachetagEnd()
+	
 @cachetagEnd()
+
 ```
 
 #### PHP
 
 ```PHP
 if ( cachetagHas('super-cool-widget') ){
-  echo cachetagGet('super-cool-widget');
+	echo cachetagGet('super-cool-widget');
 } else {
-  cachetagStart('super-cool-widget', 15);
-  echo superCoolWidgetThatTakesTooLongToGenerate();
-  echo cachetagEnd();
+	cachetagStart('super-cool-widget', 15);
+	echo superCoolWidgetThatTakesTooLongToGenerate();
+  
+		if ( cachetagHas('other-cool-widget') ){
+			echo cachetagGet('other-cool-widget');
+		} else {
+			cachetagStart('other-cool-widget', 'forever'); //widget cached until something clears it, nested inside the outer cache 
+			echo otherCoolWidgetThatTakesTooLongToGenerate();
+			echo cachetagEnd();
+		}
+		
+	echo cachetagEnd();
 }
 ```
 
@@ -61,4 +78,8 @@ if ( cachetagHas('super-cool-widget') ){
 ```PHP
 //clear the cache for a specific key
 cachetagClear('super-cool-widget');
+
+if ( $otherCoolWidgetNeedsCacheInvalidated ){ //conditionally clear the 
+	cachetagClear('other-cool-widget');
+}
 ````
