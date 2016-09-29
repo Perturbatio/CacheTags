@@ -47,7 +47,9 @@ class CacheTags {
      * @param string $tags
      */
     public function start( $key, $time = null, $tags = '' ) {
-        $time = $time | config('cachetags.timeout', 1);
+        if ($time !== 'forever') {
+            $time = $time | config('cachetags.timeout', 1);
+        }
         $tags = static::splitTags($tags | config('cachetags.default_tag', static::class));
 
         if ($time === null) {
@@ -138,9 +140,9 @@ class CacheTags {
             if (count($params) < 1) {
                 throw new InvalidArgumentException(("cachetagStart requires the cache key as a parameter"));
             }
-            $key     = $params[0];
+            $key  = $params[0];
             $time = isset($params[1]) ? $params[1] : config('cachetags.timeout', 15);
-            $tag     = isset($params[2]) ? $params[2] : 'cachetags';
+            $tag  = isset($params[2]) ? $params[2] : 'cachetags';
 
             return "<?php 
 			if ( cachetagHas(\"{$key}\") ){
