@@ -12,15 +12,15 @@ use Perturbatio\CacheTags\CacheTags;
 if ( ! function_exists('cachetagStart')) {
     /**
      * @param        $key
-     * @param        $minutes
+     * @param        $time
      * @param string $tag
      */
-    function cachetagStart( $key, $minutes = null, $tag = '' ) {
+    function cachetagStart( $key, $time = null, $tag = '' ) {
         /**
          * @var $cacheTags CacheTags
          */
         $cacheTags = app('CacheTags');
-        $cacheTags->start($key, $minutes, $tag);
+        $cacheTags->start($key, $time, $tag);
     }
 }
 
