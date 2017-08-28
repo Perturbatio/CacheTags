@@ -48,7 +48,7 @@ class CacheTags {
 	 */
 	public function start( $key, $time = null, $tags = '' ) {
 		if ($time !== 'forever') {
-			$time = $time | config('cachetags.timeout', 1);
+			$time = $time || config('cachetags.timeout', 1);
 		}
 		$tags = static::splitTags($tags | config('cachetags.default_tag', static::class));
 
