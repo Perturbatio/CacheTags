@@ -42,5 +42,12 @@
     },
     "branch-alias": {
         "dev-master": "2.0-dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Perturbatio\\CacheTags\\CacheTagsProvider"
+            ]
+        }
     }
 }
