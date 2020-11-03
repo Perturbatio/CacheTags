@@ -13,7 +13,7 @@ class CacheTagsTest extends \Orchestra\Testbench\TestCase {
 	 */
 	public $cacheTags;
 
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->cacheTags = new CacheTags(cache());
 		$this->cacheTags->addCacheMacros();

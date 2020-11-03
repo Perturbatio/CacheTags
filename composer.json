@@ -23,10 +23,10 @@
         ]
     },
     "require-dev": {
-        "phpunit/phpunit": "4.*",
-        "orchestra/testbench": "^3.3",
-        "Illuminate/Container": "^5.1",
-        "Illuminate/Filesystem": "^5.1"
+        "phpunit/phpunit": "^9.3",
+        "orchestra/testbench": "^6.3",
+        "illuminate/container": "^6|^7|^8",
+        "illuminate/filesystem": "^6|^7|^8"
     },
     "autoload-dev": {
         "psr-4": {
@@ -34,13 +34,13 @@
         }
     },
     "require": {
-        "Illuminate/Support": "^5.1",
-        "Illuminate/Cache": "^5.1"
+        "illuminate/support": "^6|^7|^8",
+        "illuminate/cache": "^6|^7|^8"
     },
     "scripts": {
         "test": "phpunit tests"
     },
     "branch-alias": {
-        "dev-master": "1.0-dev"
+        "dev-master": "2.0-dev"
     }
 }

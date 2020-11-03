@@ -97,7 +97,7 @@ class CacheTags {
 			$result = ob_get_clean();
 
 			if ($this->cache->supportsTags()) {
-				$cache = $this->cache->tags($lastCacheItem['tag']);
+				$cache = $this->cache->tags($lastCacheItem['tags']);
 			} else {
 				$cache = $this->cache;
 			}
@@ -144,7 +144,7 @@ class CacheTags {
 			$time = isset($params[1]) ? $params[1] : config('cachetags.timeout', 15);
 			$tag  = isset($params[2]) ? $params[2] : 'cachetags';
 
-			return "<?php 
+			return "<?php
 			if ( cachetagHas(\"{$key}\") ){
 				echo cachetagGet(\"{$key}\");
 			} else {
@@ -153,13 +153,13 @@ class CacheTags {
 		});
 
 		Blade::directive('cachetagEnd', function () {
-			return "<?php 
-				echo cachetagEnd(); 
+			return "<?php
+				echo cachetagEnd();
 			} ?>";
 		});
 		Blade::directive('cachetagClear', function () {
-			return "<?php 
-				echo cachetagClear(); 
+			return "<?php
+				echo cachetagClear();
 			} ?>";
 		});
 	}
