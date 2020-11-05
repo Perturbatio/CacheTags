@@ -40,14 +40,14 @@
     "scripts": {
         "test": "phpunit tests"
     },
-    "branch-alias": {
-        "dev-master": "2.0-dev"
-    },
     "extra": {
         "laravel": {
             "providers": [
                 "Perturbatio\\CacheTags\\CacheTagsProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-master": "2.0-dev"
         }
     }
 }
