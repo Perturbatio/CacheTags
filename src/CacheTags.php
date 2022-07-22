@@ -42,9 +42,9 @@ class CacheTags {
 	/**
 	 * Start caching the output that follows this call
 	 *
-	 * @param        $key
-	 * @param null   $time
-	 * @param string $tags
+	 * @param              $key
+	 * @param null         $time
+	 * @param array|string $tags
 	 */
 	public function start( $key, $time = null, $tags = '' ) {
 		if ($time !== 'forever') {
@@ -136,19 +136,19 @@ class CacheTags {
 	static public function registerBladeDirectives() {
 
 		Blade::directive('cachetagStart', function ( $params ) {
-			$params = array_map('trim', explode(',', $params), [' "\'']);
+			$params = array_map('trim', explode(',', $params));
 			if (count($params) < 1) {
 				throw new InvalidArgumentException(("cachetagStart requires the cache key as a parameter"));
 			}
 			$key  = $params[0];
 			$time = isset($params[1]) ? $params[1] : config('cachetags.timeout', 15);
-			$tag  = isset($params[2]) ? $params[2] : 'cachetags';
+			$tag  = isset($params[2]) ? $params[2] : '"cachetags"';
 
 			return "<?php
-			if ( cachetagHas(\"{$key}\") ){
-				echo cachetagGet(\"{$key}\");
+			if ( cachetagHas({$key}) ){
+				echo cachetagGet({$key});
 			} else {
-				cachetagStart(\"{$key}\", $time, \"{$tag}\");
+				cachetagStart({$key}, $time, {$tag});
 			?>";
 		});
 
@@ -167,8 +167,8 @@ class CacheTags {
 	/**
 	 * Retrieve a cached item
 	 *
-	 * @param        $key
-	 * @param string $tags
+	 * @param              $key
+	 * @param array|string $tags
 	 *
 	 * @return mixed
 	 */
@@ -186,8 +186,8 @@ class CacheTags {
 	/**
 	 * Clear a cached item
 	 *
-	 * @param        $key
-	 * @param string $tags
+	 * @param              $key
+	 * @param array|string $tags
 	 */
 	public function clear( $key, $tags = '' ) {
 		if ($this->cache->supportsTags()) {
@@ -201,7 +201,7 @@ class CacheTags {
 	/**
 	 * get a tag array from the supplied string
 	 *
-	 * @param $tags
+	 * @param array|string $tags
 	 *
 	 * @return array
 	 */
