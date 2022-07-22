@@ -42,9 +42,9 @@ class CacheTags {
 	/**
 	 * Start caching the output that follows this call
 	 *
-	 * @param              $key
-	 * @param null         $time
-	 * @param array|string $tags
+	 * @param                      $key
+	 * @param null                 $time
+	 * @param array|string|Closure $tags
 	 */
 	public function start( $key, $time = null, $tags = '' ) {
 		if ($time !== 'forever') {
@@ -167,8 +167,8 @@ class CacheTags {
 	/**
 	 * Retrieve a cached item
 	 *
-	 * @param              $key
-	 * @param array|string $tags
+	 * @param                      $key
+	 * @param array|string|Closure $tags
 	 *
 	 * @return mixed
 	 */
@@ -186,8 +186,8 @@ class CacheTags {
 	/**
 	 * Clear a cached item
 	 *
-	 * @param              $key
-	 * @param array|string $tags
+	 * @param                      $key
+	 * @param array|string|Closure $tags
 	 */
 	public function clear( $key, $tags = '' ) {
 		if ($this->cache->supportsTags()) {
@@ -199,13 +199,14 @@ class CacheTags {
 	}
 
 	/**
-	 * get a tag array from the supplied string
+	 * get a tag array from the supplied string or closure
 	 *
-	 * @param array|string $tags
+	 * @param array|string|Closure $tags
 	 *
 	 * @return array
 	 */
 	static public function splitTags( $tags ) {
+		$tags = value($tags);
 		$result = $tags;
 		if ( !is_array($tags)) {
 			$result = explode(',', (string) $tags);
