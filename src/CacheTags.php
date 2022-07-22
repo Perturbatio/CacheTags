@@ -50,7 +50,7 @@ class CacheTags {
 		if ($time !== 'forever') {
 			$time = $time || config('cachetags.timeout', 1);
 		}
-		$tags = static::splitTags($tags | config('cachetags.default_tag', static::class));
+		$tags = static::splitTags($tags ?: config('cachetags.default_tag', static::class));
 
 		if ($time === null) {
 			$time = 15;
@@ -174,7 +174,7 @@ class CacheTags {
 	 */
 	public function get( $key, $tags = '' ) {
 		if ($this->cache->supportsTags()) {
-			$tags    = static::splitTags($tags | config('cachetags.default_tag', static::class));
+			$tags    = static::splitTags($tags ?: config('cachetags.default_tag', static::class));
 			$content = $this->cache->tags($tags)->get($key);
 		} else {
 			$content = $this->cache->get($key);
@@ -191,7 +191,7 @@ class CacheTags {
 	 */
 	public function clear( $key, $tags = '' ) {
 		if ($this->cache->supportsTags()) {
-			$tags = static::splitTags($tags | config('cachetags.default_tag', static::class));
+			$tags = static::splitTags($tags ?: config('cachetags.default_tag', static::class));
 			$this->cache->tags($tags)->flush($key);
 		} else {
 			$this->cache->forget($key);
