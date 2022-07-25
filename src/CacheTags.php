@@ -136,7 +136,7 @@ class CacheTags {
 	static public function registerBladeDirectives() {
 
 		Blade::directive('cachetagStart', function ( $params ) {
-			$params = array_map('trim', explode(',', $params));
+			$params = array_map('trim', explode(',', $params, 3));
 			if (count($params) < 1) {
 				throw new InvalidArgumentException(("cachetagStart requires the cache key as a parameter"));
 			}
