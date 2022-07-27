@@ -1,6 +1,6 @@
 # CacheTags - Laravel blade partial caching
 
-[![Build Status](https://travis-ci.org/Perturbatio/CacheTags.svg?branch=master)](https://travis-ci.org/Perturbatio/CacheTags)
+[![CircleCI](https://circleci.com/gh/Perturbatio/CacheTags/tree/master.svg?style=shield)](https://circleci.com/gh/Perturbatio/CacheTags/tree/master)
 [![Latest Stable Version](https://poser.pugx.org/perturbatio/cachetags/v/stable?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
 [![Latest Unstable Version](https://poser.pugx.org/perturbatio/cachetags/v/unstable?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
 [![License](https://poser.pugx.org/perturbatio/cachetags/license?format=flat)](https://packagist.org/packages/perturbatio/cachetags)
