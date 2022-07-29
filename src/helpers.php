@@ -11,9 +11,9 @@ use Perturbatio\CacheTags\CacheTags;
 
 if ( !function_exists('cachetagStart')) {
 	/**
-	 * @param        $key
-	 * @param        $time
-	 * @param string $tag
+	 * @param                      $key
+	 * @param                      $time
+	 * @param array|string|Closure $tag
 	 */
 	function cachetagStart( $key, $time = null, $tag = '' ) {
 		app('CacheTags')->start($key, $time, $tag);
@@ -41,7 +41,8 @@ if ( !function_exists('cachetagHas')) {
 }
 if ( !function_exists('cachetagClear')) {
 	/**
-	 * @param $key
+	 * @param                      $key
+	 * @param array|string|Closure $tag
 	 *
 	 * @return mixed
 	 */
@@ -52,7 +53,8 @@ if ( !function_exists('cachetagClear')) {
 
 if ( !function_exists('cachetagGet')) {
 	/**
-	 * @param $key
+	 * @param                      $key
+	 * @param array|string|Closure $tag
 	 *
 	 * @return mixed
 	 */
