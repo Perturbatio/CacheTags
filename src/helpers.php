@@ -31,12 +31,13 @@ if ( !function_exists('cachetagEnd')) {
 
 if ( !function_exists('cachetagHas')) {
 	/**
-	 * @param $key
+	 * @param                      $key
+	 * @param array|string|Closure $tag
 	 *
 	 * @return mixed
 	 */
-	function cachetagHas( $key ) {
-		return app('CacheTags')->has($key);
+	function cachetagHas( $key, $tag = '' ) {
+		return app('CacheTags')->has($key, $tag);
 	}
 }
 if ( !function_exists('cachetagClear')) {

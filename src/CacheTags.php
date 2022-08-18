@@ -69,12 +69,18 @@ class CacheTags {
 	/**
 	 * Determine if the cache has the specified key
 	 *
-	 * @param $key
+	 * @param                      $key
+	 * @param array|string|Closure $tags
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	public function has( $key ) {
-		return $this->cache->has($key);
+	public function has( $key, $tags = '' ) {
+		if ($this->cache->supportsTags()) {
+			$tags    = static::splitTags($tags ?: config('cachetags.default_tag', static::class));
+			return $this->cache->tags($tags)->has($key);
+		} else {
+			return $this->cache->has($key);
+		}
 	}
 
 	/**
@@ -145,8 +151,8 @@ class CacheTags {
 			$tag  = isset($params[2]) ? $params[2] : '"cachetags"';
 
 			return "<?php
-			if ( cachetagHas({$key}) ){
-				echo cachetagGet({$key});
+			if ( cachetagHas({$key}, {$tag}) ){
+				echo cachetagGet({$key}, {$tag});
 			} else {
 				cachetagStart({$key}, $time, {$tag});
 			?>";
