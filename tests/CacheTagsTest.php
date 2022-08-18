@@ -55,6 +55,15 @@ class CacheTagsTest extends \Orchestra\Testbench\TestCase {
 		$this->assertEquals($testValue, $this->cacheTags->get($cacheKey), " data was not cached");
 	}
 
+	public function testCachedDataExistenceCheck() {
+		$testValue = __METHOD__ . ':value';
+		$cacheKey  = __METHOD__;
+		$this->cacheTags->start($cacheKey, 1, 'testTag');
+		echo $testValue;
+		$this->cacheTags->end();
+		$this->assertTrue($this->cacheTags->has($cacheKey, 'testTag'), " cached data existence check failed");
+	}
+
 	public function testIfCachedDataCanBeTagged() {
 		$testValue = __METHOD__ . ':value';
 		$cacheKey  = __METHOD__;
