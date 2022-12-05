@@ -45,9 +45,6 @@
             "providers": [
                 "Perturbatio\\CacheTags\\CacheTagsProvider"
             ]
-        },
-        "branch-alias": {
-            "dev-master": "2.0-dev"
         }
     }
 }
